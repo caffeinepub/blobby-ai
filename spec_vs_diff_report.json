@@ -1,0 +1,96 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-27T23:03:43.724Z",
+  "summary": "The diff implements most frontend and backend requirements. The Motoko backend (REQ-1) is present with all five functions. Frontend components cover onboarding (REQ-2), three-panel layout (REQ-3), chat message UI (REQ-4), message input bar (REQ-5), task classification (REQ-6), Puter.js AI service (REQ-7), app/game preview panel (REQ-8), image upload (REQ-9), prompt cards (REQ-10), and design system (REQ-11). However, several specific acceptance criteria have gaps: the Puter.js CDN script tag is not visible in the diff, the build request states no user authentication is required but a full Internet Identity login flow is implemented, and some task classifier details cannot be verified due to truncated files.",
+  "missing_requirements": [
+    {
+      "id": "REQ-7",
+      "requirement": "Puter.js must be loaded via a CDN script tag in the HTML",
+      "reason": "REQ-7 requires 'Load Puter.js via its CDN script tag in the HTML'. The diff only contains a TypeScript ambient declaration (declare const puter) in aiService.ts but no index.html with a CDN script tag is visible in the diff.",
+      "evidence": [
+        "frontend/src/services/aiService.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Reasoning, Research, and Creative task classifications must be implemented",
+      "reason": "The taskClassifier utility file (frontend/src/utils/taskClassifier.ts) is listed as omitted from the diff due to limits, so it cannot be confirmed that all required classifications are implemented.",
+      "evidence": []
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity authentication flow with login screen, profile setup modal, and per-user session ownership in the Motoko backend",
+      "reason": "The build request explicitly lists 'User authentication or accounts (no login required)' as a non-goal. The diff introduces LoginScreen.tsx, ProfileSetupModal.tsx, useInternetIdentity.ts, and the backend enforces caller-based ownership with AccessControl for all session operations.",
+      "evidence": [
+        "frontend/src/components/LoginScreen.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "UserProfile storage and profile management (getCallerUserProfile, getUserProfile, saveCallerUserProfile) in the Motoko backend",
+      "reason": "The build request only specifies chat session and message storage functions for REQ-1. User profile CRUD was not requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "description": "Preview panel fullscreen toggle and refresh button",
+      "reason": "REQ-8 only requires the preview panel to open automatically, render in a sandboxed iframe, provide a Download HTML button, and be manually closable. Fullscreen mode and refresh were not requested.",
+      "evidence": [
+        "frontend/src/components/PreviewPanel.tsx"
+      ]
+    },
+    {
+      "description": "Collapsible left sidebar with toggle button",
+      "reason": "REQ-3 does not specify that the left sidebar should be collapsible. Only the right preview panel is described as collapsible in the requirements.",
+      "evidence": [
+        "frontend/src/components/Sidebar.tsx",
+        "frontend/src/components/Layout.tsx"
+      ]
+    },
+    {
+      "description": "Prompt cards duplicated on the OnboardingScreen in addition to the main empty-chat PromptCards component",
+      "reason": "REQ-10 specifies prompt cards should appear on the home/empty-chat screen and REQ-2 describes the onboarding screen separately without prompt cards.",
+      "evidence": [
+        "frontend/src/components/OnboardingScreen.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/ChatMessage.tsx",
+    "frontend/src/components/ChatWindow.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/LoadingIndicator.tsx",
+    "frontend/src/components/LoginScreen.tsx",
+    "frontend/src/components/MessageInput.tsx",
+    "frontend/src/components/OnboardingScreen.tsx",
+    "frontend/src/components/PreviewPanel.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/PromptCards.tsx",
+    "frontend/src/components/Sidebar.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/services/aiService.ts",
+    "frontend/src/utils/codeRenderer.ts",
+    "frontend/src/utils/imageHandler.ts",
+    "frontend/src/utils/taskClassifier.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

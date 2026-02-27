@@ -1,0 +1,22 @@
+{
+  "frontend/index.html": "HTML entry point that loads the Inter font from Google Fonts and includes the Puter.js CDN script for free AI model access.",
+  "frontend/src/index.css": "Complete global stylesheet with OKLCH dark theme (deep dark background, violet/indigo accent), Inter font, custom animations (blob float, typing pulse, fade-in, slide-up), markdown content styles, and scrollbar utilities.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with Inter font family, custom violet color tokens, animation keyframes for blob float/typing/fade effects, and violet glow box shadows.",
+  "frontend/src/utils/taskClassifier.ts": "Utility that classifies user messages into task types (Chat, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, Reasoning, Research) using regex patterns, and maps each to a Puter.js model string and badge color.",
+  "frontend/src/utils/imageHandler.ts": "Utility functions for image file handling — converting to base64, creating/revoking thumbnail URLs, and validating image files.",
+  "frontend/src/utils/codeRenderer.ts": "Utility functions for rendering generated HTML code in iframes via blob URLs, downloading HTML files, and extracting HTML from markdown code blocks.",
+  "frontend/src/services/aiService.ts": "AI service module that interfaces with Puter.js global API — provides sendChatMessage (with streaming support and system prompt) and generateImage functions.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations: user profile (get/save), sessions (list/get/create/delete), and messages (save), with proper cache invalidation.",
+  "frontend/src/components/LoadingIndicator.tsx": "Reusable 3-dot pulse loading animation component with violet color and staggered animation delays.",
+  "frontend/src/components/OnboardingScreen.tsx": "First-visit welcome screen with animated floating blob mascot, tagline, Start Chatting button, and four suggested prompt preview cards.",
+  "frontend/src/components/ChatMessage.tsx": "Chat message component rendering user messages (right-aligned indigo bubble) and assistant messages (left-aligned dark card with violet glow), with a custom markdown parser using a dedicated typed `Heading` component instead of dynamic JSX tags, code blocks with copy buttons, task-type badges, and image display.",
+  "frontend/src/components/PromptCards.tsx": "Empty-chat home screen showing four suggested prompt cards with icons; clicking a card populates and submits the prompt.",
+  "frontend/src/components/PreviewPanel.tsx": "Collapsible right panel for live app/game previews in a sandboxed iframe (via blob URL) or generated image display, with refresh and download HTML buttons.",
+  "frontend/src/components/MessageInput.tsx": "Bottom input bar with textarea (Enter to send, Shift+Enter for newline), attach file/image icons, drag-and-drop image support, thumbnail preview, and animated send button with loading state.",
+  "frontend/src/components/Sidebar.tsx": "Left sidebar showing chat session history fetched from backend, with New Chat button, session titles/timestamps, delete functionality, and collapsible state.",
+  "frontend/src/components/ChatWindow.tsx": "Main chat area managing local message state, streaming AI responses via Puter.js, session creation, backend message persistence, and wiring PromptCards/MessageInput/ChatMessage together.",
+  "frontend/src/components/Layout.tsx": "Three-panel main layout with top bar (logo, user menu), collapsible sidebar, central chat window, and collapsible right preview panel, plus footer with attribution.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time users to enter their display name after authentication, saved to the backend.",
+  "frontend/src/components/LoginScreen.tsx": "Authentication screen with animated blob mascot and sign-in button using Internet Identity.",
+  "frontend/src/App.tsx": "Root app component managing onboarding flow, authentication state, profile loading, and rendering the appropriate screen (onboarding, login, loading, or main layout)."
+}

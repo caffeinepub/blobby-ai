@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Building Blobby AI — a next-generation multi-agent AI assistant web app built by Talha bin Saif. Features conversational chat, code generation, app/game building, image generation/analysis/editing, creative writing, and file handling. Uses Puter.js for free AI model access via OpenRouter. Premium dark UI with violet/indigo accents, animated blob mascot, sidebar chat history, live preview panel, and session memory.",
+  "architectural_notes": [
+    "Tech stack: Puter.js for AI model access (free, no API key), OpenRouter via Puter for model routing, Three.js/Babylon.js for 3D games, Vanilla JS or React for apps, HTML/CSS/JS for all generated output, Puter.js KV for session/chat history.",
+    "UI: Deep dark background (#0D0D0D/#111118), violet/indigo accent (#7C3AED/#6D28D9), Inter/Geist font, no cyberpunk/neon aesthetics — premium SaaS look.",
+    "Model routing: general chat→GPT-4o/Claude 3.5, reasoning→Grok 4/Claude 4, code→DeepSeek/GPT-4o, 3D→GPT-4o+Three.js, images→best image model, vision→Grok/Claude/GPT-4o Vision, creative→Claude 3.5/Gemini Pro, fast→Llama 4/Gemini Flash, research→Perplexity/Gemini.",
+    "Never expose internal model names or API details to end users; show task-type badge only."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Friendly glowing blob character mascot with smooth rounded organic shape, soft violet/indigo glow aura, large expressive eyes, minimalist clean style on a transparent background (blobby-mascot.dim_400x400.png)\n- Blobby AI logo combining a small blob icon and wordmark, violet gradient, clean modern sans-serif typography, transparent background (blobby-logo.dim_320x80.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-an-onboarding-welcome-screen-that-appears-on-first-launch-it-must-display-the-animated-blobby-blob-mascot-from-generated-assets-the-tagline-your-next-generation-ai-creative-powerhouse-and-a-prominent-start-chatting-button-that-dismisses-the-screen-and-opens-the-main-chat-interface-store-the-seen-onboarding-flag-in-localstorage",
+      "title": "Build an onboarding/welcome screen that appears on first launch. It must display the animated Blobby blob mascot (from generated assets), the tagline 'Your next-generation AI creative powerhouse', and a prominent 'Start Chatting' button that dismisses the screen and opens the main chat interface. Store the 'seen onboarding' flag in localStorage.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-main-three-panel-layout-a-left-sidebar-for-chat-session-history-a-central-main-chat-window-and-a-collapsible-right-panel-for-live-previews-apps-games-images-the-top-bar-must-show-the-blobby-ai-logo-and-name-on-the-left-and-a-settings-profile-icon-on-the-right-a-footer-must-display-built-by-talha-bin-saif-in-small-subtle-text",
+      "title": "Implement the main three-panel layout: a left sidebar for chat session history, a central main chat window, and a collapsible right panel for live previews (apps, games, images). The top bar must show the Blobby AI logo and name on the left, and a settings/profile icon on the right. A footer must display 'Built by Talha bin Saif' in small, subtle text.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-chat-message-ui-user-messages-must-be-right-aligned-in-a-soft-indigo-bubble-6d28d9-background-assistant-blobby-responses-must-be-left-aligned-in-a-dark-card-with-a-subtle-violet-border-glow-each-assistant-message-must-show-a-small-task-type-pill-badge-e-g-chat-code-vision-creative-reasoning-image-but-never-the-underlying-model-name-markdown-rendering-headings-bullet-points-numbered-lists-tables-code-blocks-with-syntax-highlighting-must-be-supported-in-assistant-messages",
+      "title": "Implement the chat message UI. User messages must be right-aligned in a soft indigo bubble (#6D28D9 background). Assistant (Blobby) responses must be left-aligned in a dark card with a subtle violet border glow. Each assistant message must show a small task-type pill badge (e.g. 'Chat', 'Code', 'Vision', 'Creative', 'Reasoning', 'Image') but never the underlying model name. Markdown rendering (headings, bullet points, numbered lists, tables, code blocks with syntax highlighting) must be supported in assistant messages.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-message-input-bar-at-the-bottom-of-the-chat-it-must-be-a-large-rounded-text-area-with-action-icons-attach-file-upload-image-and-send-while-a-response-is-being-generated-show-a-smooth-3-dot-pulse-loading-animation-and-disable-the-send-button-support-pressing-enter-to-send-shift-enter-for-newline",
+      "title": "Build the message input bar at the bottom of the chat. It must be a large, rounded text area with action icons: attach file, upload image, and send. While a response is being generated, show a smooth 3-dot pulse loading animation and disable the send button. Support pressing Enter to send (Shift+Enter for newline).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-intelligent-task-type-detection-on-the-frontend-before-calling-the-puter-js-ai-api-analyze-the-user-s-message-to-classify-it-as-one-of-chat-reasoning-code-appbuild-gamebuild-imagegen-vision-creative-or-research-use-this-classification-to-select-the-appropriate-model-string-for-the-puter-js-ai-chat-or-ai-txt2img-call-and-attach-the-task-type-label-to-the-assistant-response-message-for-display-in-the-pill-badge",
+      "title": "Implement intelligent task-type detection on the frontend. Before calling the Puter.js AI API, analyze the user's message to classify it as one of: Chat, Reasoning, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, or Research. Use this classification to select the appropriate model string for the Puter.js `ai.chat` or `ai.txt2img` call, and attach the task-type label to the assistant response message for display in the pill badge.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-puter-js-for-all-ai-calls-load-puter-js-via-its-cdn-script-tag-in-the-html-use-puter-ai-chat-messages-model-for-text-chat-code-reasoning-creative-tasks-use-puter-ai-txt2img-prompt-for-image-generation-pass-the-full-conversation-history-array-to-every-chat-call-to-maintain-multi-turn-context-within-the-session",
+      "title": "Integrate Puter.js for all AI calls. Load Puter.js via its CDN script tag in the HTML. Use `puter.ai.chat(messages, { model: '...' })` for text/chat/code/reasoning/creative tasks. Use `puter.ai.txt2img(prompt)` for image generation. Pass the full conversation history array to every chat call to maintain multi-turn context within the session.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-app-game-build-feature-when-the-task-type-is-appbuild-or-gamebuild-after-receiving-the-generated-html-js-css-code-from-the-ai-automatically-open-the-right-preview-panel-and-render-the-generated-code-inside-a-sandboxed-iframe-using-a-blob-url-show-a-download-html-button-that-saves-the-generated-code-as-a-single-html-file",
+      "title": "Implement the App/Game Build feature. When the task type is AppBuild or GameBuild, after receiving the generated HTML/JS/CSS code from the AI, automatically open the right preview panel and render the generated code inside a sandboxed `<iframe>` using a blob URL. Show a 'Download HTML' button that saves the generated code as a single `.html` file.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-image-upload-panel-the-input-area-must-support-clicking-the-image-icon-or-dragging-and-dropping-an-image-file-to-attach-it-show-a-thumbnail-preview-of-the-uploaded-image-above-the-input-bar-before-sending-when-sent-include-the-image-data-in-the-puter-js-vision-model-call-alongside-the-user-s-text-prompt",
+      "title": "Implement the image upload panel. The input area must support clicking the image icon or dragging and dropping an image file to attach it. Show a thumbnail preview of the uploaded image above the input bar before sending. When sent, include the image data in the Puter.js vision model call alongside the user's text prompt.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-four-suggested-prompt-cards-on-the-home-empty-chat-screen-the-cards-must-be-build-me-a-3d-game-generate-an-image-of-a-futuristic-city-write-me-a-python-script-to-scrape-data-and-explain-quantum-computing-simply-clicking-any-card-must-populate-it-as-the-user-s-message-and-immediately-submit-it",
+      "title": "Display the four suggested prompt cards on the home/empty-chat screen. The cards must be: 'Build me a 3D game', 'Generate an image of a futuristic city', 'Write me a Python script to scrape data', and 'Explain quantum computing simply'. Clicking any card must populate it as the user's message and immediately submit it.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-the-full-visual-design-system-deep-dark-background-111118-primary-accent-electric-violet-7c3aed-soft-white-body-text-dark-purple-navy-gradient-cards-use-the-inter-font-throughout-no-neon-green-no-glitch-effects-all-animations-must-be-smooth-subtle-and-professional-floating-blob-fade-ins-gentle-glows-the-overall-aesthetic-must-feel-premium-and-calm-like-a-top-tier-saas-product",
+      "title": "Apply the full visual design system: deep dark background (#111118), primary accent electric violet (#7C3AED), soft white body text, dark purple/navy gradient cards. Use the Inter font throughout. No neon green, no glitch effects. All animations must be smooth, subtle, and professional (floating blob, fade-ins, gentle glows). The overall aesthetic must feel premium and calm like a top-tier SaaS product.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Conversational chat with full context memory per session",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Advanced reasoning — logic, math, analysis, research, summarization",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Code generation & debugging in any language",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "App building — generate full working web apps with live preview and download",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Game creation — 2D and 3D browser games using Three.js or Babylon.js",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Image generation from text prompts via Puter.js image models",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Image analysis & description using vision models",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Image editing — apply transformations, filters, or instructions to uploaded images",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Creative writing — stories, poems, scripts, ads, emails, social media posts",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "File handling — accept and process uploaded files (images, PDFs, docs)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Auto model selection based on task type using Puter.js/OpenRouter",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Premium dark UI: sidebar, main chat, right preview panel, violet/indigo accent, animated blob mascot",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Onboarding welcome screen with Blobby mascot, tagline, and Start Chatting button",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Live app/game preview panel with download as ZIP or single HTML file",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Image upload panel with drag-and-drop and thumbnail preview",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Session memory via Puter.js KV storage for continuous context-aware conversations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Home screen suggested prompt cards (4 smart prompts)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Task-type model badge (pill) on each response (e.g. Code, Vision, Creative)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Footer branding: 'Built by Talha bin Saif'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Create a Motoko backend actor that stores chat sessions and message history. Each session has a unique ID, a list of messages (role: user/assistant, content: text, timestamp), and a task-type label. Expose functions: createSession, getSession, saveMessage, listSessions, deleteSession.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Blobby AI",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

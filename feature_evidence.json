@@ -1,0 +1,216 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-an-onboarding-welcome-screen-that-appears-on-first-launch-it-must-display-the-animated-blobby-blob-mascot-from-generated-assets-the-tagline-your-next-generation-ai-creative-powerhouse-and-a-prominent-start-chatting-button-that-dismisses-the-screen-and-opens-the-main-chat-interface-store-the-seen-onboarding-flag-in-localstorage",
+      "featureTitle": "Build an onboarding/welcome screen that appears on first launch. It must display the animated Blobby blob mascot (from generated assets), the tagline 'Your next-generation AI creative powerhouse', and a prominent 'Start Chatting' button that dismisses the screen and opens the main chat interface. Store the 'seen onboarding' flag in localStorage.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/OnboardingScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-main-three-panel-layout-a-left-sidebar-for-chat-session-history-a-central-main-chat-window-and-a-collapsible-right-panel-for-live-previews-apps-games-images-the-top-bar-must-show-the-blobby-ai-logo-and-name-on-the-left-and-a-settings-profile-icon-on-the-right-a-footer-must-display-built-by-talha-bin-saif-in-small-subtle-text",
+      "featureTitle": "Implement the main three-panel layout: a left sidebar for chat session history, a central main chat window, and a collapsible right panel for live previews (apps, games, images). The top bar must show the Blobby AI logo and name on the left, and a settings/profile icon on the right. A footer must display 'Built by Talha bin Saif' in small, subtle text.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/PreviewPanel.tsx",
+        "frontend/src/components/Sidebar.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-chat-message-ui-user-messages-must-be-right-aligned-in-a-soft-indigo-bubble-6d28d9-background-assistant-blobby-responses-must-be-left-aligned-in-a-dark-card-with-a-subtle-violet-border-glow-each-assistant-message-must-show-a-small-task-type-pill-badge-e-g-chat-code-vision-creative-reasoning-image-but-never-the-underlying-model-name-markdown-rendering-headings-bullet-points-numbered-lists-tables-code-blocks-with-syntax-highlighting-must-be-supported-in-assistant-messages",
+      "featureTitle": "Implement the chat message UI. User messages must be right-aligned in a soft indigo bubble (#6D28D9 background). Assistant (Blobby) responses must be left-aligned in a dark card with a subtle violet border glow. Each assistant message must show a small task-type pill badge (e.g. 'Chat', 'Code', 'Vision', 'Creative', 'Reasoning', 'Image') but never the underlying model name. Markdown rendering (headings, bullet points, numbered lists, tables, code blocks with syntax highlighting) must be supported in assistant messages.",
+      "files": [
+        "frontend/src/components/ChatMessage.tsx",
+        "frontend/src/components/ChatWindow.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-message-input-bar-at-the-bottom-of-the-chat-it-must-be-a-large-rounded-text-area-with-action-icons-attach-file-upload-image-and-send-while-a-response-is-being-generated-show-a-smooth-3-dot-pulse-loading-animation-and-disable-the-send-button-support-pressing-enter-to-send-shift-enter-for-newline",
+      "featureTitle": "Build the message input bar at the bottom of the chat. It must be a large, rounded text area with action icons: attach file, upload image, and send. While a response is being generated, show a smooth 3-dot pulse loading animation and disable the send button. Support pressing Enter to send (Shift+Enter for newline).",
+      "files": [
+        "frontend/src/components/LoadingIndicator.tsx",
+        "frontend/src/components/MessageInput.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-intelligent-task-type-detection-on-the-frontend-before-calling-the-puter-js-ai-api-analyze-the-user-s-message-to-classify-it-as-one-of-chat-reasoning-code-appbuild-gamebuild-imagegen-vision-creative-or-research-use-this-classification-to-select-the-appropriate-model-string-for-the-puter-js-ai-chat-or-ai-txt2img-call-and-attach-the-task-type-label-to-the-assistant-response-message-for-display-in-the-pill-badge",
+      "featureTitle": "Implement intelligent task-type detection on the frontend. Before calling the Puter.js AI API, analyze the user's message to classify it as one of: Chat, Reasoning, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, or Research. Use this classification to select the appropriate model string for the Puter.js `ai.chat` or `ai.txt2img` call, and attach the task-type label to the assistant response message for display in the pill badge.",
+      "files": [
+        "frontend/src/utils/taskClassifier.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-puter-js-for-all-ai-calls-load-puter-js-via-its-cdn-script-tag-in-the-html-use-puter-ai-chat-messages-model-for-text-chat-code-reasoning-creative-tasks-use-puter-ai-txt2img-prompt-for-image-generation-pass-the-full-conversation-history-array-to-every-chat-call-to-maintain-multi-turn-context-within-the-session",
+      "featureTitle": "Integrate Puter.js for all AI calls. Load Puter.js via its CDN script tag in the HTML. Use `puter.ai.chat(messages, { model: '...' })` for text/chat/code/reasoning/creative tasks. Use `puter.ai.txt2img(prompt)` for image generation. Pass the full conversation history array to every chat call to maintain multi-turn context within the session.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/services/aiService.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-app-game-build-feature-when-the-task-type-is-appbuild-or-gamebuild-after-receiving-the-generated-html-js-css-code-from-the-ai-automatically-open-the-right-preview-panel-and-render-the-generated-code-inside-a-sandboxed-iframe-using-a-blob-url-show-a-download-html-button-that-saves-the-generated-code-as-a-single-html-file",
+      "featureTitle": "Implement the App/Game Build feature. When the task type is AppBuild or GameBuild, after receiving the generated HTML/JS/CSS code from the AI, automatically open the right preview panel and render the generated code inside a sandboxed `<iframe>` using a blob URL. Show a 'Download HTML' button that saves the generated code as a single `.html` file.",
+      "files": [
+        "frontend/src/components/PreviewPanel.tsx",
+        "frontend/src/utils/codeRenderer.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-image-upload-panel-the-input-area-must-support-clicking-the-image-icon-or-dragging-and-dropping-an-image-file-to-attach-it-show-a-thumbnail-preview-of-the-uploaded-image-above-the-input-bar-before-sending-when-sent-include-the-image-data-in-the-puter-js-vision-model-call-alongside-the-user-s-text-prompt",
+      "featureTitle": "Implement the image upload panel. The input area must support clicking the image icon or dragging and dropping an image file to attach it. Show a thumbnail preview of the uploaded image above the input bar before sending. When sent, include the image data in the Puter.js vision model call alongside the user's text prompt.",
+      "files": [
+        "frontend/src/components/MessageInput.tsx",
+        "frontend/src/utils/imageHandler.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-display-the-four-suggested-prompt-cards-on-the-home-empty-chat-screen-the-cards-must-be-build-me-a-3d-game-generate-an-image-of-a-futuristic-city-write-me-a-python-script-to-scrape-data-and-explain-quantum-computing-simply-clicking-any-card-must-populate-it-as-the-user-s-message-and-immediately-submit-it",
+      "featureTitle": "Display the four suggested prompt cards on the home/empty-chat screen. The cards must be: 'Build me a 3D game', 'Generate an image of a futuristic city', 'Write me a Python script to scrape data', and 'Explain quantum computing simply'. Clicking any card must populate it as the user's message and immediately submit it.",
+      "files": [
+        "frontend/src/components/ChatWindow.tsx",
+        "frontend/src/components/PromptCards.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-the-full-visual-design-system-deep-dark-background-111118-primary-accent-electric-violet-7c3aed-soft-white-body-text-dark-purple-navy-gradient-cards-use-the-inter-font-throughout-no-neon-green-no-glitch-effects-all-animations-must-be-smooth-subtle-and-professional-floating-blob-fade-ins-gentle-glows-the-overall-aesthetic-must-feel-premium-and-calm-like-a-top-tier-saas-product",
+      "featureTitle": "Apply the full visual design system: deep dark background (#111118), primary accent electric violet (#7C3AED), soft white body text, dark purple/navy gradient cards. Use the Inter font throughout. No neon green, no glitch effects. All animations must be smooth, subtle, and professional (floating blob, fade-ins, gentle glows). The overall aesthetic must feel premium and calm like a top-tier SaaS product.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

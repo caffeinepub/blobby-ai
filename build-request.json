@@ -1,0 +1,262 @@
+{
+  "kind": "build_request",
+  "title": "Blobby AI — Multi-Agent AI Assistant Interface",
+  "projectName": "Blobby AI",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a Motoko backend actor that stores chat sessions and message history. Each session has a unique ID, a list of messages (role: user/assistant, content: text, timestamp), and a task-type label. Expose functions: createSession, getSession, saveMessage, listSessions, deleteSession.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Session Memory: Save full chat history per session",
+          "Puter.js KV storage for session/chat history"
+        ]
+      },
+      "acceptanceCriteria": [
+        "createSession returns a new session ID",
+        "saveMessage appends a message to the correct session",
+        "getSession returns all messages for a session in order",
+        "listSessions returns all session IDs and their first message or title",
+        "deleteSession removes the session and all its messages"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Build an onboarding/welcome screen that appears on first launch. It must display the animated Blobby blob mascot (from generated assets), the tagline 'Your next-generation AI creative powerhouse', and a prominent 'Start Chatting' button that dismisses the screen and opens the main chat interface. Store the 'seen onboarding' flag in localStorage.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Onboarding Screen: On first open, show a clean welcome screen with Blobby mascot, tagline, and 'Start Chatting' button"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Welcome screen is shown only on first visit",
+        "Animated blob mascot is visible with a subtle floating animation",
+        "Tagline text is displayed below the mascot",
+        "'Start Chatting' button transitions user to the main chat view",
+        "Subsequent visits skip the onboarding screen"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement the main three-panel layout: a left sidebar for chat session history, a central main chat window, and a collapsible right panel for live previews (apps, games, images). The top bar must show the Blobby AI logo and name on the left, and a settings/profile icon on the right. A footer must display 'Built by Talha bin Saif' in small, subtle text.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Layout: Sidebar for chat history on left, main chat window in center, optional right panel for live previews",
+          "Top Bar: Show 'Blobby AI' logo + name on left",
+          "Footer: Show 'Built by Talha bin Saif'"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Left sidebar lists all chat sessions from the backend with timestamps",
+        "Clicking a session loads its messages in the main chat window",
+        "Right preview panel is collapsible and hidden by default",
+        "Top bar logo and name are always visible",
+        "Footer credit text is visible on all screens"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement the chat message UI. User messages must be right-aligned in a soft indigo bubble (#6D28D9 background). Assistant (Blobby) responses must be left-aligned in a dark card with a subtle violet border glow. Each assistant message must show a small task-type pill badge (e.g. 'Chat', 'Code', 'Vision', 'Creative', 'Reasoning', 'Image') but never the underlying model name. Markdown rendering (headings, bullet points, numbered lists, tables, code blocks with syntax highlighting) must be supported in assistant messages.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "User messages aligned right in a soft indigo bubble",
+          "Blobby responses aligned left in a dark card with subtle border glow",
+          "Model Badge: Small pill badge visible on each response showing task type"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User messages appear right-aligned with indigo background",
+        "Assistant messages appear left-aligned with dark card and glow border",
+        "Task-type pill badge is shown on every assistant message",
+        "Markdown headings, lists, tables, and code blocks render correctly",
+        "Code blocks have syntax highlighting and a copy button"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build the message input bar at the bottom of the chat. It must be a large, rounded text area with action icons: attach file, upload image, and send. While a response is being generated, show a smooth 3-dot pulse loading animation and disable the send button. Support pressing Enter to send (Shift+Enter for newline).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Input Box: Large, smooth, rounded input at the bottom with icons for: attach file, upload image, voice input, and send button",
+          "Loading State: Smooth animated 3-dot pulse or streaming text effect"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Input box is visible at the bottom of the chat panel",
+        "Attach file and upload image icons are present and functional (open file picker)",
+        "Send button submits the message",
+        "Enter sends the message; Shift+Enter inserts a newline",
+        "3-dot pulse animation is shown while awaiting a response",
+        "Send button is disabled during generation"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement intelligent task-type detection on the frontend. Before calling the Puter.js AI API, analyze the user's message to classify it as one of: Chat, Reasoning, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, or Research. Use this classification to select the appropriate model string for the Puter.js `ai.chat` or `ai.txt2img` call, and attach the task-type label to the assistant response message for display in the pill badge.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Automatically detect the task type and silently pick the best model",
+          "Never tell the user which model you are using unless they ask"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Messages containing 'code', 'debug', 'script', 'function' are classified as Code",
+        "Messages containing 'build', 'create an app', 'make a website' are classified as AppBuild",
+        "Messages containing 'game', '3D', 'three.js' are classified as GameBuild",
+        "Messages containing 'generate image', 'draw', 'picture of' are classified as ImageGen",
+        "Messages with an uploaded image are classified as Vision",
+        "All other conversational messages default to Chat",
+        "Task type is shown as the pill badge on the response card"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Integrate Puter.js for all AI calls. Load Puter.js via its CDN script tag in the HTML. Use `puter.ai.chat(messages, { model: '...' })` for text/chat/code/reasoning/creative tasks. Use `puter.ai.txt2img(prompt)` for image generation. Pass the full conversation history array to every chat call to maintain multi-turn context within the session.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Puter.js for all AI model access (free, no API key)",
+          "Multi-turn Context: Always remember everything said in the current session"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Puter.js loads via CDN without requiring any API key configuration",
+        "Chat messages include the full prior conversation history for context",
+        "Image generation uses puter.ai.txt2img and displays the result inline",
+        "No API keys or secrets are hardcoded anywhere in the frontend"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Implement the App/Game Build feature. When the task type is AppBuild or GameBuild, after receiving the generated HTML/JS/CSS code from the AI, automatically open the right preview panel and render the generated code inside a sandboxed `<iframe>` using a blob URL. Show a 'Download HTML' button that saves the generated code as a single `.html` file.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Live App Preview: When user asks to build an app or game, render it live in a preview panel",
+          "Allow download as a ZIP or single HTML file"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Right preview panel opens automatically for AppBuild and GameBuild responses",
+        "Generated HTML/JS/CSS code is rendered live inside a sandboxed iframe",
+        "'Download HTML' button saves the full file to the user's machine",
+        "Preview panel can be manually closed and re-opened"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Implement the image upload panel. The input area must support clicking the image icon or dragging and dropping an image file to attach it. Show a thumbnail preview of the uploaded image above the input bar before sending. When sent, include the image data in the Puter.js vision model call alongside the user's text prompt.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Image Upload Panel: Drag and drop or click to upload. Show thumbnail preview before sending",
+          "Image Analysis & Description — Accept uploaded images"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking the image icon opens a file picker for images",
+        "Dragging and dropping an image onto the chat area attaches it",
+        "A thumbnail preview of the attached image is shown before sending",
+        "The image is included in the AI call as base64 for vision analysis",
+        "The thumbnail is cleared after the message is sent"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Display the four suggested prompt cards on the home/empty-chat screen. The cards must be: 'Build me a 3D game', 'Generate an image of a futuristic city', 'Write me a Python script to scrape data', and 'Explain quantum computing simply'. Clicking any card must populate it as the user's message and immediately submit it.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Suggested Prompts: On home screen show 4 smart prompt cards"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Four prompt cards are visible when no messages exist in the current session",
+        "Each card shows an icon and the prompt text",
+        "Clicking a card fills the input and submits the message",
+        "Cards are hidden once the first message is sent"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Apply the full visual design system: deep dark background (#111118), primary accent electric violet (#7C3AED), soft white body text, dark purple/navy gradient cards. Use the Inter font throughout. No neon green, no glitch effects. All animations must be smooth, subtle, and professional (floating blob, fade-ins, gentle glows). The overall aesthetic must feel premium and calm like a top-tier SaaS product.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Color Palette: Deep dark background (#0D0D0D or #111118), with a primary accent of electric violet/indigo (#7C3AED)",
+          "NO cyberpunk aesthetics. Keep it premium, calm, and professional"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Background color is #111118 or darker across all screens",
+        "Primary interactive elements and accents use #7C3AED",
+        "Inter font is loaded and applied globally",
+        "No neon green or glitch-style animations are present anywhere",
+        "Blob mascot has a continuous subtle float animation",
+        "Cards have dark gradient backgrounds with subtle violet border glow"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not use any paid or key-requiring AI APIs — all AI calls must go through Puter.js (CDN loaded) which provides free access",
+    "Do not expose model names to the user — only task-type labels (e.g. 'Code', 'Vision') are shown",
+    "No cyberpunk aesthetics: no neon green, no glitch effects, no overly flashy animations",
+    "Footer must always display 'Built by Talha bin Saif'",
+    "Do not use blue & purple color schemes — use deep dark (#111118) with violet/indigo (#7C3AED) accent only"
+  ],
+  "nonGoals": [
+    "Native mobile app or React Native implementation",
+    "Backend AI inference — all AI calls are handled client-side via Puter.js",
+    "User authentication or accounts (no login required)",
+    "Voice input (microphone) functionality",
+    "ZIP file download (single HTML file download is sufficient)",
+    "PDF or document parsing beyond file attachment UI"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Friendly glowing blob character mascot with smooth rounded organic shape, soft violet/indigo glow aura, large expressive eyes, minimalist clean style on a transparent background (blobby-mascot.dim_400x400.png)",
+      "Blobby AI logo combining a small blob icon and wordmark, violet gradient, clean modern sans-serif typography, transparent background (blobby-logo.dim_320x80.png)"
+    ],
+    "edits": []
+  }
+}
