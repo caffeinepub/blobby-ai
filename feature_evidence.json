@@ -2,34 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-build-an-onboarding-welcome-screen-that-appears-on-first-launch-it-must-display-the-animated-blobby-blob-mascot-from-generated-assets-the-tagline-your-next-generation-ai-creative-powerhouse-and-a-prominent-start-chatting-button-that-dismisses-the-screen-and-opens-the-main-chat-interface-store-the-seen-onboarding-flag-in-localstorage",
-      "featureTitle": "Build an onboarding/welcome screen that appears on first launch. It must display the animated Blobby blob mascot (from generated assets), the tagline 'Your next-generation AI creative powerhouse', and a prominent 'Start Chatting' button that dismisses the screen and opens the main chat interface. Store the 'seen onboarding' flag in localStorage.",
+      "featureId": "feature-replace-the-existing-three-panel-layout-component-with-a-single-full-screen-layout-remove-the-left-sidebar-center-chat-window-and-right-preview-panel-arrangement-entirely-the-new-layout-must-occupy-the-full-viewport-height-and-width-with-a-0d0d0d-dark-background",
+      "featureTitle": "Replace the existing three-panel Layout component with a single full-screen layout. Remove the left sidebar, center chat window, and right preview panel arrangement entirely. The new layout must occupy the full viewport height and width with a #0D0D0D dark background.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/OnboardingScreen.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-main-three-panel-layout-a-left-sidebar-for-chat-session-history-a-central-main-chat-window-and-a-collapsible-right-panel-for-live-previews-apps-games-images-the-top-bar-must-show-the-blobby-ai-logo-and-name-on-the-left-and-a-settings-profile-icon-on-the-right-a-footer-must-display-built-by-talha-bin-saif-in-small-subtle-text",
-      "featureTitle": "Implement the main three-panel layout: a left sidebar for chat session history, a central main chat window, and a collapsible right panel for live previews (apps, games, images). The top bar must show the Blobby AI logo and name on the left, and a settings/profile icon on the right. A footer must display 'Built by Talha bin Saif' in small, subtle text.",
-      "files": [
-        "frontend/src/App.tsx",
         "frontend/src/components/Layout.tsx",
-        "frontend/src/components/PreviewPanel.tsx",
-        "frontend/src/components/Sidebar.tsx"
+        "frontend/src/index.css"
       ],
       "components": [
         "authorization@4.0.0",
@@ -41,16 +18,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-12"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-the-chat-message-ui-user-messages-must-be-right-aligned-in-a-soft-indigo-bubble-6d28d9-background-assistant-blobby-responses-must-be-left-aligned-in-a-dark-card-with-a-subtle-violet-border-glow-each-assistant-message-must-show-a-small-task-type-pill-badge-e-g-chat-code-vision-creative-reasoning-image-but-never-the-underlying-model-name-markdown-rendering-headings-bullet-points-numbered-lists-tables-code-blocks-with-syntax-highlighting-must-be-supported-in-assistant-messages",
-      "featureTitle": "Implement the chat message UI. User messages must be right-aligned in a soft indigo bubble (#6D28D9 background). Assistant (Blobby) responses must be left-aligned in a dark card with a subtle violet border glow. Each assistant message must show a small task-type pill badge (e.g. 'Chat', 'Code', 'Vision', 'Creative', 'Reasoning', 'Image') but never the underlying model name. Markdown rendering (headings, bullet points, numbered lists, tables, code blocks with syntax highlighting) must be supported in assistant messages.",
+      "featureId": "feature-implement-a-top-navigation-bar-spanning-the-full-width-the-left-side-must-contain-a-hamburger-menu-icon-button-that-toggles-the-slide-in-sidebar-drawer-the-center-must-display-the-blobby-ai-title-in-bold-white-text-the-right-side-must-contain-a-settings-icon-button-the-bar-must-use-a-slightly-elevated-dark-surface-111111-or-similar-with-no-border-or-minimal-violet-accent-underline",
+      "featureTitle": "Implement a top navigation bar spanning the full width. The left side must contain a hamburger menu icon (≡) button that toggles the slide-in sidebar drawer. The center must display the 'Blobby AI' title in bold white text. The right side must contain a settings icon button. The bar must use a slightly elevated dark surface (#111111 or similar) with no border or minimal violet accent underline.",
       "files": [
-        "frontend/src/components/ChatMessage.tsx",
-        "frontend/src/components/ChatWindow.tsx"
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/TopBar.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -62,15 +39,58 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-4"
+        "REQ-13"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-build-the-message-input-bar-at-the-bottom-of-the-chat-it-must-be-a-large-rounded-text-area-with-action-icons-attach-file-upload-image-and-send-while-a-response-is-being-generated-show-a-smooth-3-dot-pulse-loading-animation-and-disable-the-send-button-support-pressing-enter-to-send-shift-enter-for-newline",
-      "featureTitle": "Build the message input bar at the bottom of the chat. It must be a large, rounded text area with action icons: attach file, upload image, and send. While a response is being generated, show a smooth 3-dot pulse loading animation and disable the send button. Support pressing Enter to send (Shift+Enter for newline).",
+      "featureId": "feature-implement-a-slide-in-sidebar-drawer-for-chat-history-it-must-be-hidden-by-default-off-screen-left-and-slide-in-smoothly-when-the-hamburger-menu-icon-is-tapped-it-must-show-the-list-of-past-chat-sessions-reusing-existing-session-data-and-logic-from-the-current-sidebar-component-a-new-chat-button-and-a-close-dismiss-control-tapping-outside-the-drawer-or-pressing-close-must-slide-it-back-out-the-drawer-must-overlay-the-main-content-with-a-semi-transparent-dark-backdrop",
+      "featureTitle": "Implement a slide-in sidebar drawer for chat history. It must be hidden by default (off-screen left), and slide in smoothly when the hamburger menu icon is tapped. It must show the list of past chat sessions (reusing existing session data and logic from the current Sidebar component), a 'New Chat' button, and a close/dismiss control. Tapping outside the drawer or pressing close must slide it back out. The drawer must overlay the main content with a semi-transparent dark backdrop.",
       "files": [
-        "frontend/src/components/LoadingIndicator.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/SidebarDrawer.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-redesign-the-welcome-home-screen-shown-when-no-chat-session-is-active-as-a-vertically-centered-single-column-layout-it-must-display-1-the-blobby-mascot-image-centered-at-100-100px-with-a-continuous-slow-vertical-floating-animation-translatey-oscillation-3s-cycle-ease-in-out-infinite-2-the-heading-what-can-i-help-with-in-bold-white-text-below-the-mascot-3-the-four-suggestion-prompt-cards-arranged-in-a-2-2-grid-centered-on-screen-the-existing-prompt-card-click-behavior-populate-and-submit-must-be-preserved",
+      "featureTitle": "Redesign the welcome/home screen (shown when no chat session is active) as a vertically centered single-column layout. It must display: (1) the Blobby mascot image centered at 100×100px with a continuous slow vertical floating animation (translateY oscillation, ~3s cycle, ease-in-out infinite); (2) the heading 'What can I help with?' in bold white text below the mascot; (3) the four suggestion prompt cards arranged in a 2×2 grid centered on screen. The existing prompt card click behavior (populate and submit) must be preserved.",
+      "files": [
+        "frontend/src/components/ChatWindow.tsx",
+        "frontend/src/components/WelcomeScreen.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-redesign-the-bottom-message-input-bar-to-span-the-full-width-of-the-screen-the-placeholder-text-must-read-message-blobby-ai-the-input-bar-must-be-pinned-to-the-bottom-of-the-viewport-retain-all-existing-functionality-attach-file-icon-upload-image-icon-send-button-enter-to-send-shift-enter-for-newline-loading-state-with-3-dot-animation-and-image-thumbnail-preview-above-the-bar",
+      "featureTitle": "Redesign the bottom message input bar to span the full width of the screen. The placeholder text must read 'Message Blobby AI...'. The input bar must be pinned to the bottom of the viewport. Retain all existing functionality: attach file icon, upload image icon, send button, Enter-to-send, Shift+Enter for newline, loading state with 3-dot animation, and image thumbnail preview above the bar.",
+      "files": [
+        "frontend/src/components/ChatWindow.tsx",
         "frontend/src/components/MessageInput.tsx"
       ],
       "components": [
@@ -83,15 +103,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-16"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-intelligent-task-type-detection-on-the-frontend-before-calling-the-puter-js-ai-api-analyze-the-user-s-message-to-classify-it-as-one-of-chat-reasoning-code-appbuild-gamebuild-imagegen-vision-creative-or-research-use-this-classification-to-select-the-appropriate-model-string-for-the-puter-js-ai-chat-or-ai-txt2img-call-and-attach-the-task-type-label-to-the-assistant-response-message-for-display-in-the-pill-badge",
-      "featureTitle": "Implement intelligent task-type detection on the frontend. Before calling the Puter.js AI API, analyze the user's message to classify it as one of: Chat, Reasoning, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, or Research. Use this classification to select the appropriate model string for the Puter.js `ai.chat` or `ai.txt2img` call, and attach the task-type label to the assistant response message for display in the pill badge.",
+      "featureId": "feature-when-a-chat-session-is-active-messages-exist-the-main-area-must-switch-from-the-welcome-screen-to-a-full-height-scrollable-chat-message-list-the-chat-messages-must-render-from-top-to-bottom-in-the-space-between-the-top-bar-and-the-bottom-input-bar-the-existing-chatmessage-component-styling-right-aligned-user-bubbles-left-aligned-assistant-cards-with-violet-glow-task-type-badges-markdown-rendering-must-be-preserved-unchanged",
+      "featureTitle": "When a chat session is active (messages exist), the main area must switch from the welcome screen to a full-height scrollable chat message list. The chat messages must render from top to bottom in the space between the top bar and the bottom input bar. The existing ChatMessage component styling (right-aligned user bubbles, left-aligned assistant cards with violet glow, task-type badges, markdown rendering) must be preserved unchanged.",
       "files": [
-        "frontend/src/utils/taskClassifier.ts"
+        "frontend/src/components/ChatWindow.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -103,79 +123,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-6"
+        "REQ-17"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-integrate-puter-js-for-all-ai-calls-load-puter-js-via-its-cdn-script-tag-in-the-html-use-puter-ai-chat-messages-model-for-text-chat-code-reasoning-creative-tasks-use-puter-ai-txt2img-prompt-for-image-generation-pass-the-full-conversation-history-array-to-every-chat-call-to-maintain-multi-turn-context-within-the-session",
-      "featureTitle": "Integrate Puter.js for all AI calls. Load Puter.js via its CDN script tag in the HTML. Use `puter.ai.chat(messages, { model: '...' })` for text/chat/code/reasoning/creative tasks. Use `puter.ai.txt2img(prompt)` for image generation. Pass the full conversation history array to every chat call to maintain multi-turn context within the session.",
-      "files": [
-        "frontend/index.html",
-        "frontend/src/services/aiService.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-app-game-build-feature-when-the-task-type-is-appbuild-or-gamebuild-after-receiving-the-generated-html-js-css-code-from-the-ai-automatically-open-the-right-preview-panel-and-render-the-generated-code-inside-a-sandboxed-iframe-using-a-blob-url-show-a-download-html-button-that-saves-the-generated-code-as-a-single-html-file",
-      "featureTitle": "Implement the App/Game Build feature. When the task type is AppBuild or GameBuild, after receiving the generated HTML/JS/CSS code from the AI, automatically open the right preview panel and render the generated code inside a sandboxed `<iframe>` using a blob URL. Show a 'Download HTML' button that saves the generated code as a single `.html` file.",
-      "files": [
-        "frontend/src/components/PreviewPanel.tsx",
-        "frontend/src/utils/codeRenderer.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-image-upload-panel-the-input-area-must-support-clicking-the-image-icon-or-dragging-and-dropping-an-image-file-to-attach-it-show-a-thumbnail-preview-of-the-uploaded-image-above-the-input-bar-before-sending-when-sent-include-the-image-data-in-the-puter-js-vision-model-call-alongside-the-user-s-text-prompt",
-      "featureTitle": "Implement the image upload panel. The input area must support clicking the image icon or dragging and dropping an image file to attach it. Show a thumbnail preview of the uploaded image above the input bar before sending. When sent, include the image data in the Puter.js vision model call alongside the user's text prompt.",
-      "files": [
-        "frontend/src/components/MessageInput.tsx",
-        "frontend/src/utils/imageHandler.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-display-the-four-suggested-prompt-cards-on-the-home-empty-chat-screen-the-cards-must-be-build-me-a-3d-game-generate-an-image-of-a-futuristic-city-write-me-a-python-script-to-scrape-data-and-explain-quantum-computing-simply-clicking-any-card-must-populate-it-as-the-user-s-message-and-immediately-submit-it",
-      "featureTitle": "Display the four suggested prompt cards on the home/empty-chat screen. The cards must be: 'Build me a 3D game', 'Generate an image of a futuristic city', 'Write me a Python script to scrape data', and 'Explain quantum computing simply'. Clicking any card must populate it as the user's message and immediately submit it.",
+      "featureId": "feature-for-app-game-build-previews-html-iframe-output-instead-of-opening-a-right-panel-display-the-generated-preview-in-a-full-screen-modal-or-bottom-sheet-overlay-that-appears-on-top-of-the-chat-include-the-existing-download-html-button-and-a-close-button-to-dismiss-the-overlay-and-return-to-the-chat-view",
+      "featureTitle": "For App/Game Build previews (HTML iframe output), instead of opening a right panel, display the generated preview in a full-screen modal or bottom sheet overlay that appears on top of the chat. Include the existing 'Download HTML' button and a close button to dismiss the overlay and return to the chat view.",
       "files": [
         "frontend/src/components/ChatWindow.tsx",
-        "frontend/src/components/PromptCards.tsx"
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/PreviewModal.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -187,16 +145,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-10"
+        "REQ-18"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-apply-the-full-visual-design-system-deep-dark-background-111118-primary-accent-electric-violet-7c3aed-soft-white-body-text-dark-purple-navy-gradient-cards-use-the-inter-font-throughout-no-neon-green-no-glitch-effects-all-animations-must-be-smooth-subtle-and-professional-floating-blob-fade-ins-gentle-glows-the-overall-aesthetic-must-feel-premium-and-calm-like-a-top-tier-saas-product",
-      "featureTitle": "Apply the full visual design system: deep dark background (#111118), primary accent electric violet (#7C3AED), soft white body text, dark purple/navy gradient cards. Use the Inter font throughout. No neon green, no glitch effects. All animations must be smooth, subtle, and professional (floating blob, fade-ins, gentle glows). The overall aesthetic must feel premium and calm like a top-tier SaaS product.",
+      "featureId": "feature-apply-the-updated-color-scheme-throughout-the-redesigned-layout-background-0d0d0d-primary-violet-accent-7c3aed-white-body-text-suggestion-cards-must-use-dark-surface-cards-with-a-subtle-violet-border-or-glow-all-animations-floating-mascot-drawer-slide-fade-ins-must-be-smooth-and-professional-maintain-the-inter-font-throughout",
+      "featureTitle": "Apply the updated color scheme throughout the redesigned layout: background #0D0D0D, primary violet accent #7C3AED, white body text. Suggestion cards must use dark surface cards with a subtle violet border or glow. All animations (floating mascot, drawer slide, fade-ins) must be smooth and professional. Maintain the Inter font throughout.",
       "files": [
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
+        "frontend/src/components/PromptCards.tsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "authorization@4.0.0",
@@ -208,7 +166,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-11"
+        "REQ-19"
       ],
       "confidence": "high"
     }

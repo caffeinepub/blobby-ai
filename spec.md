@@ -1,19 +1,16 @@
 # Specification
 
 ## Summary
-**Goal:** Build Blobby AI, a multi-agent AI assistant web app with a premium dark UI, multi-turn chat sessions stored on the backend, intelligent task routing via Puter.js, and live preview of generated apps/games.
+**Goal:** Redesign the Blobby AI frontend from a three-panel layout to a ChatGPT-style single-screen mobile layout.
 
 **Planned changes:**
-- Motoko backend actor with `createSession`, `getSession`, `saveMessage`, `listSessions`, and `deleteSession` functions to persist chat history
-- Onboarding/welcome screen (shown once via localStorage) with animated Blobby blob mascot, tagline, and "Start Chatting" button
-- Three-panel layout: left sidebar (session list), central chat window, collapsible right preview panel; top bar with Blobby AI logo; footer with "Built by Talha bin Saif"
-- Chat message UI with right-aligned indigo user bubbles, left-aligned dark assistant cards with violet glow, task-type pill badges, and markdown rendering with syntax-highlighted code blocks and copy button
-- Bottom input bar with attach file, upload image icons, Enter-to-send (Shift+Enter for newline), and 3-dot pulse loading animation
-- Intelligent task-type detection (Chat, Reasoning, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, Research) to select the appropriate Puter.js model call
-- Puter.js CDN integration for all AI calls (`puter.ai.chat` with full conversation history, `puter.ai.txt2img` for image generation); no API keys required
-- App/Game Build feature: auto-opens right panel with sandboxed iframe rendering generated HTML/JS/CSS and a "Download HTML" button
-- Image upload with drag-and-drop, thumbnail preview, and base64 vision call inclusion
-- Four suggested prompt cards on the empty chat home screen that auto-submit on click
-- Full design system: #111118 background, #7C3AED accent, Inter font, subtle floating blob animation, dark gradient cards with violet border glow
+- Remove the three-panel layout (left sidebar, center chat, right preview panel) and replace with a single full-screen layout with `#0D0D0D` background
+- Add a full-width top navigation bar with a hamburger menu icon (left), "Blobby AI" title (center), and settings icon (right)
+- Implement a slide-in sidebar drawer (hidden by default) that opens on hamburger tap, showing chat history, a "New Chat" button, and a semi-transparent backdrop
+- Redesign the welcome/home screen as a vertically centered single-column layout with the Blobby mascot (100×100px) with a slow floating animation, "What can I help with?" heading, and 4 suggestion cards in a 2×2 grid
+- Redesign the bottom input bar to be full-width, pinned to the bottom, with placeholder "Message Blobby AI...", retaining all existing input functionality
+- When a chat session is active, show a full-height scrollable message list between the top bar and input bar, preserving existing ChatMessage styling
+- Replace the right-panel preview for App/Game builds with a full-screen modal overlay including the "Download HTML" button and a close button
+- Apply color scheme: background `#0D0D0D`, violet accent `#7C3AED`, white text, Inter font, smooth transitions throughout
 
-**User-visible outcome:** Users can open Blobby AI, start multi-turn AI chat sessions with intelligent task routing, view live previews of generated apps/games, analyze uploaded images, and generate images — all in a premium, calm dark-violet UI with persistent session history.
+**User-visible outcome:** Users experience a clean, mobile-style single-screen chat interface with a slide-in history drawer, floating mascot on the welcome screen, full-width input bar, and full-screen overlays for app/game previews.

@@ -25,7 +25,7 @@ export default function MessageInput({
     const imageInputRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Handle initial value (from prompt cards)
+    // Handle initial value (from prompt cards / welcome screen)
     useEffect(() => {
         if (initialValue) {
             setText(initialValue);
@@ -112,7 +112,7 @@ export default function MessageInput({
 
     return (
         <div
-            className="px-4 pb-4 pt-2"
+            className="w-full px-4 pb-4 pt-3"
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -140,7 +140,7 @@ export default function MessageInput({
             {/* Drag overlay */}
             {isDragging && (
                 <div
-                    className="absolute inset-0 z-10 flex items-center justify-center rounded-xl border-2 border-dashed"
+                    className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl border-2 border-dashed"
                     style={{
                         background: 'oklch(0.52 0.22 290 / 0.1)',
                         borderColor: 'oklch(0.52 0.22 290)',
@@ -154,10 +154,10 @@ export default function MessageInput({
 
             {/* Input container */}
             <div
-                className="relative flex items-end gap-2 rounded-2xl px-4 py-3 transition-all duration-200"
+                className="relative flex items-end gap-2 rounded-2xl px-4 py-3 transition-all duration-200 w-full"
                 style={{
-                    background: 'oklch(0.16 0.015 280)',
-                    border: `1px solid ${isDragging ? 'oklch(0.52 0.22 290)' : 'oklch(0.25 0.02 280)'}`,
+                    background: 'oklch(0.14 0.012 280)',
+                    border: `1px solid ${isDragging ? 'oklch(0.52 0.22 290)' : 'oklch(0.22 0.018 280)'}`,
                     boxShadow: isDragging ? '0 0 20px oklch(0.52 0.22 290 / 0.2)' : 'none',
                 }}
             >
@@ -208,7 +208,7 @@ export default function MessageInput({
                             style={{
                                 background: canSend
                                     ? 'linear-gradient(135deg, oklch(0.52 0.22 290) 0%, oklch(0.42 0.18 290) 100%)'
-                                    : 'oklch(0.25 0.02 280)',
+                                    : 'oklch(0.22 0.018 280)',
                                 boxShadow: canSend ? '0 0 12px oklch(0.52 0.22 290 / 0.4)' : 'none',
                             }}
                         >

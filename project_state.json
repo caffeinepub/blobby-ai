@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "Building Blobby AI — a next-generation multi-agent AI assistant web app built by Talha bin Saif. Features conversational chat, code generation, app/game building, image generation/analysis/editing, creative writing, and file handling. Uses Puter.js for free AI model access via OpenRouter. Premium dark UI with violet/indigo accents, animated blob mascot, sidebar chat history, live preview panel, and session memory.",
+  "projectStateVersion": 5,
+  "summary": "Building Blobby AI — a next-generation multi-agent AI assistant web app built by Talha bin Saif. Features conversational chat, code generation, app/game building, image generation/analysis/editing, creative writing, and file handling. Uses Puter.js for free AI model access via OpenRouter. Redesigned as a single full-screen ChatGPT-mobile-style layout: top bar with hamburger menu + centered title + settings icon, centered welcome area with floating Blobby mascot, 'What can I help with?' title, 2x2 suggestion cards grid, full-width bottom input bar. Chat history moved to a slide-in sidebar drawer. Dark theme #0D0D0D with violet #7C3AED accents.",
   "architectural_notes": [
     "Tech stack: Puter.js for AI model access (free, no API key), OpenRouter via Puter for model routing, Three.js/Babylon.js for 3D games, Vanilla JS or React for apps, HTML/CSS/JS for all generated output, Puter.js KV for session/chat history.",
     "UI: Deep dark background (#0D0D0D/#111118), violet/indigo accent (#7C3AED/#6D28D9), Inter/Geist font, no cyberpunk/neon aesthetics — premium SaaS look.",
     "Model routing: general chat→GPT-4o/Claude 3.5, reasoning→Grok 4/Claude 4, code→DeepSeek/GPT-4o, 3D→GPT-4o+Three.js, images→best image model, vision→Grok/Claude/GPT-4o Vision, creative→Claude 3.5/Gemini Pro, fast→Llama 4/Gemini Flash, research→Perplexity/Gemini.",
-    "Never expose internal model names or API details to end users; show task-type badge only."
+    "Never expose internal model names or API details to end users; show task-type badge only.",
+    "Layout: Single full-screen layout (no 3-panel). Top bar: hamburger (left) + 'Blobby AI' (center) + settings (right). Chat history in slide-in sidebar drawer. Welcome screen: floating mascot 100x100, 'What can I help with?' heading, 2x2 suggestion cards, full-width input bar."
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Friendly glowing blob character mascot with smooth rounded organic shape, soft violet/indigo glow aura, large expressive eyes, minimalist clean style on a transparent background (blobby-mascot.dim_400x400.png)\n- Blobby AI logo combining a small blob icon and wordmark, violet gradient, clean modern sans-serif typography, transparent background (blobby-logo.dim_320x80.png)",
   "existing_features": [
     {
       "id": "feature-build-an-onboarding-welcome-screen-that-appears-on-first-launch-it-must-display-the-animated-blobby-blob-mascot-from-generated-assets-the-tagline-your-next-generation-ai-creative-powerhouse-and-a-prominent-start-chatting-button-that-dismisses-the-screen-and-opens-the-main-chat-interface-store-the-seen-onboarding-flag-in-localstorage",
@@ -89,6 +89,70 @@
       "title": "Apply the full visual design system: deep dark background (#111118), primary accent electric violet (#7C3AED), soft white body text, dark purple/navy gradient cards. Use the Inter font throughout. No neon green, no glitch effects. All animations must be smooth, subtle, and professional (floating blob, fade-ins, gentle glows). The overall aesthetic must feel premium and calm like a top-tier SaaS product.",
       "reqIds": [
         "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-three-panel-layout-component-with-a-single-full-screen-layout-remove-the-left-sidebar-center-chat-window-and-right-preview-panel-arrangement-entirely-the-new-layout-must-occupy-the-full-viewport-height-and-width-with-a-0d0d0d-dark-background",
+      "title": "Replace the existing three-panel Layout component with a single full-screen layout. Remove the left sidebar, center chat window, and right preview panel arrangement entirely. The new layout must occupy the full viewport height and width with a #0D0D0D dark background.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-top-navigation-bar-spanning-the-full-width-the-left-side-must-contain-a-hamburger-menu-icon-button-that-toggles-the-slide-in-sidebar-drawer-the-center-must-display-the-blobby-ai-title-in-bold-white-text-the-right-side-must-contain-a-settings-icon-button-the-bar-must-use-a-slightly-elevated-dark-surface-111111-or-similar-with-no-border-or-minimal-violet-accent-underline",
+      "title": "Implement a top navigation bar spanning the full width. The left side must contain a hamburger menu icon (≡) button that toggles the slide-in sidebar drawer. The center must display the 'Blobby AI' title in bold white text. The right side must contain a settings icon button. The bar must use a slightly elevated dark surface (#111111 or similar) with no border or minimal violet accent underline.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-slide-in-sidebar-drawer-for-chat-history-it-must-be-hidden-by-default-off-screen-left-and-slide-in-smoothly-when-the-hamburger-menu-icon-is-tapped-it-must-show-the-list-of-past-chat-sessions-reusing-existing-session-data-and-logic-from-the-current-sidebar-component-a-new-chat-button-and-a-close-dismiss-control-tapping-outside-the-drawer-or-pressing-close-must-slide-it-back-out-the-drawer-must-overlay-the-main-content-with-a-semi-transparent-dark-backdrop",
+      "title": "Implement a slide-in sidebar drawer for chat history. It must be hidden by default (off-screen left), and slide in smoothly when the hamburger menu icon is tapped. It must show the list of past chat sessions (reusing existing session data and logic from the current Sidebar component), a 'New Chat' button, and a close/dismiss control. Tapping outside the drawer or pressing close must slide it back out. The drawer must overlay the main content with a semi-transparent dark backdrop.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-welcome-home-screen-shown-when-no-chat-session-is-active-as-a-vertically-centered-single-column-layout-it-must-display-1-the-blobby-mascot-image-centered-at-100-100px-with-a-continuous-slow-vertical-floating-animation-translatey-oscillation-3s-cycle-ease-in-out-infinite-2-the-heading-what-can-i-help-with-in-bold-white-text-below-the-mascot-3-the-four-suggestion-prompt-cards-arranged-in-a-2-2-grid-centered-on-screen-the-existing-prompt-card-click-behavior-populate-and-submit-must-be-preserved",
+      "title": "Redesign the welcome/home screen (shown when no chat session is active) as a vertically centered single-column layout. It must display: (1) the Blobby mascot image centered at 100×100px with a continuous slow vertical floating animation (translateY oscillation, ~3s cycle, ease-in-out infinite); (2) the heading 'What can I help with?' in bold white text below the mascot; (3) the four suggestion prompt cards arranged in a 2×2 grid centered on screen. The existing prompt card click behavior (populate and submit) must be preserved.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-bottom-message-input-bar-to-span-the-full-width-of-the-screen-the-placeholder-text-must-read-message-blobby-ai-the-input-bar-must-be-pinned-to-the-bottom-of-the-viewport-retain-all-existing-functionality-attach-file-icon-upload-image-icon-send-button-enter-to-send-shift-enter-for-newline-loading-state-with-3-dot-animation-and-image-thumbnail-preview-above-the-bar",
+      "title": "Redesign the bottom message input bar to span the full width of the screen. The placeholder text must read 'Message Blobby AI...'. The input bar must be pinned to the bottom of the viewport. Retain all existing functionality: attach file icon, upload image icon, send button, Enter-to-send, Shift+Enter for newline, loading state with 3-dot animation, and image thumbnail preview above the bar.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-a-chat-session-is-active-messages-exist-the-main-area-must-switch-from-the-welcome-screen-to-a-full-height-scrollable-chat-message-list-the-chat-messages-must-render-from-top-to-bottom-in-the-space-between-the-top-bar-and-the-bottom-input-bar-the-existing-chatmessage-component-styling-right-aligned-user-bubbles-left-aligned-assistant-cards-with-violet-glow-task-type-badges-markdown-rendering-must-be-preserved-unchanged",
+      "title": "When a chat session is active (messages exist), the main area must switch from the welcome screen to a full-height scrollable chat message list. The chat messages must render from top to bottom in the space between the top bar and the bottom input bar. The existing ChatMessage component styling (right-aligned user bubbles, left-aligned assistant cards with violet glow, task-type badges, markdown rendering) must be preserved unchanged.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-for-app-game-build-previews-html-iframe-output-instead-of-opening-a-right-panel-display-the-generated-preview-in-a-full-screen-modal-or-bottom-sheet-overlay-that-appears-on-top-of-the-chat-include-the-existing-download-html-button-and-a-close-button-to-dismiss-the-overlay-and-return-to-the-chat-view",
+      "title": "For App/Game Build previews (HTML iframe output), instead of opening a right panel, display the generated preview in a full-screen modal or bottom sheet overlay that appears on top of the chat. Include the existing 'Download HTML' button and a close button to dismiss the overlay and return to the chat view.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-the-updated-color-scheme-throughout-the-redesigned-layout-background-0d0d0d-primary-violet-accent-7c3aed-white-body-text-suggestion-cards-must-use-dark-surface-cards-with-a-subtle-violet-border-or-glow-all-animations-floating-mascot-drawer-slide-fade-ins-must-be-smooth-and-professional-maintain-the-inter-font-throughout",
+      "title": "Apply the updated color scheme throughout the redesigned layout: background #0D0D0D, primary violet accent #7C3AED, white body text. Suggestion cards must use dark surface cards with a subtle violet border or glow. All animations (floating mascot, drawer slide, fade-ins) must be smooth and professional. Maintain the Inter font throughout.",
+      "reqIds": [
+        "REQ-19"
       ],
       "version": 1
     }
@@ -214,6 +278,12 @@
       "reqIds": [
         "REQ-1"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Redesign to ChatGPT mobile UI: single full-screen layout, top bar (hamburger+title+settings), centered floating mascot, 'What can I help with?' heading, 2x2 suggestion cards, full-width input bar, slide-in sidebar drawer for chat history",
+      "reqIds": [],
       "status": "pending"
     }
   ],

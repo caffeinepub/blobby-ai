@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import ChatMessage from './ChatMessage';
 import MessageInput from './MessageInput';
-import PromptCards from './PromptCards';
+import WelcomeScreen from './WelcomeScreen';
 import LoadingIndicator from './LoadingIndicator';
 import { useGetSession, useSaveMessage, useCreateSession } from '../hooks/useQueries';
 import { classifyTask, type TaskType } from '../utils/taskClassifier';
@@ -100,12 +100,11 @@ export default function ChatWindow({
             id: userMsgId,
             role: 'user',
             content: text,
-            imageUrl: imageBase64 ? undefined : undefined,
+            imageUrl: undefined,
         };
 
         // If image, create object URL for display
         if (imageBase64) {
-            // Convert base64 to blob URL for display
             try {
                 const base64Data = imageBase64.split(',')[1];
                 const mimeType = imageBase64.split(';')[0].split(':')[1];
@@ -148,7 +147,6 @@ export default function ChatWindow({
             let fullResponse = '';
 
             if (taskType === 'ImageGen') {
-                // Image generation
                 const imageUrl = await generateImage(text);
                 fullResponse = `Here's your generated image based on: "${text}"`;
                 setLocalMessages(prev =>
@@ -160,7 +158,6 @@ export default function ChatWindow({
                 );
                 onPreviewImage(imageUrl);
             } else {
-                // Build conversation history for context
                 const history: AIChatMessage[] = localMessages
                     .filter(m => m.id !== assistantMsgId)
                     .map(m => ({
@@ -168,7 +165,6 @@ export default function ChatWindow({
                         content: m.content,
                     }));
 
-                // Add current user message with image if present
                 if (imageBase64) {
                     history.push({
                         role: 'user',
@@ -181,7 +177,6 @@ export default function ChatWindow({
                     history.push({ role: 'user', content: text });
                 }
 
-                // Stream response
                 fullResponse = await sendChatMessage(
                     history,
                     model,
@@ -196,14 +191,12 @@ export default function ChatWindow({
                     }
                 );
 
-                // Check for HTML content to preview
                 const htmlContent = extractHtmlFromMarkdown(fullResponse);
                 if (htmlContent && (taskType === 'AppBuild' || taskType === 'GameBuild')) {
                     onPreviewHtml(htmlContent);
                 }
             }
 
-            // Save assistant response to backend
             try {
                 await saveMessage.mutateAsync({
                     sessionId: activeSessionId,
@@ -214,7 +207,6 @@ export default function ChatWindow({
                 console.error('Failed to save assistant message:', err);
             }
 
-            // Invalidate session query
             queryClient.invalidateQueries({ queryKey: ['sessions'] });
 
         } catch (err) {
@@ -243,20 +235,22 @@ export default function ChatWindow({
         onPreviewHtml(html);
     }, [onPreviewHtml]);
 
-    const showPromptCards = localMessages.length === 0 && !sessionLoading && !isGenerating;
+    const showWelcome = localMessages.length === 0 && !sessionLoading && !isGenerating;
 
     return (
-        <div className="flex flex-col h-full">
-            {/* Messages area */}
-            <div className="flex-1 overflow-y-auto scrollbar-thin px-4 py-4">
+        <div className="flex flex-col h-full" style={{ background: '#0D0D0D' }}>
+            {/* Messages / Welcome area */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin">
                 {sessionLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <LoadingIndicator />
                     </div>
-                ) : showPromptCards ? (
-                    <PromptCards onSelectPrompt={handlePromptSelect} />
+                ) : showWelcome ? (
+                    <div className="flex flex-col h-full">
+                        <WelcomeScreen onSelectPrompt={handlePromptSelect} />
+                    </div>
                 ) : (
-                    <div className="max-w-3xl mx-auto">
+                    <div className="max-w-3xl mx-auto px-4 py-4 pb-6">
                         {localMessages.map(msg => (
                             <ChatMessage
                                 key={msg.id}
@@ -274,16 +268,17 @@ export default function ChatWindow({
                 )}
             </div>
 
-            {/* Input */}
-            <div className="flex-shrink-0 border-t border-border/30">
-                <div className="max-w-3xl mx-auto">
-                    <MessageInput
-                        onSend={handleSend}
-                        isLoading={isGenerating}
-                        initialValue={pendingPrompt}
-                        onInitialValueConsumed={() => setPendingPrompt('')}
-                    />
-                </div>
+            {/* Bottom Input Bar */}
+            <div
+                className="flex-shrink-0 w-full"
+                style={{ borderTop: '1px solid oklch(0.18 0.015 280)' }}
+            >
+                <MessageInput
+                    onSend={handleSend}
+                    isLoading={isGenerating}
+                    initialValue={pendingPrompt}
+                    onInitialValueConsumed={() => setPendingPrompt('')}
+                />
             </div>
         </div>
     );

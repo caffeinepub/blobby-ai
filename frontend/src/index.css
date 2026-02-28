@@ -8,25 +8,25 @@
     :root {
         --radius: 0.75rem;
 
-        /* Blobby AI Dark Theme */
-        --background: 0.13 0.012 280;
+        /* Blobby AI Dark Theme — #0D0D0D base */
+        --background: 0.10 0.008 280;
         --foreground: 0.95 0.01 280;
-        --card: 0.16 0.015 280;
+        --card: 0.14 0.012 280;
         --card-foreground: 0.95 0.01 280;
-        --popover: 0.18 0.018 280;
+        --popover: 0.16 0.015 280;
         --popover-foreground: 0.95 0.01 280;
         --primary: 0.52 0.22 290;
         --primary-foreground: 0.98 0.005 280;
-        --secondary: 0.2 0.02 280;
+        --secondary: 0.18 0.018 280;
         --secondary-foreground: 0.85 0.01 280;
-        --muted: 0.2 0.015 280;
-        --muted-foreground: 0.6 0.02 280;
-        --accent: 0.22 0.025 280;
+        --muted: 0.18 0.012 280;
+        --muted-foreground: 0.55 0.02 280;
+        --accent: 0.20 0.020 280;
         --accent-foreground: 0.9 0.01 280;
         --destructive: 0.577 0.245 27.325;
         --destructive-foreground: 0.985 0 0;
-        --border: 0.25 0.02 280;
-        --input: 0.22 0.02 280;
+        --border: 0.22 0.018 280;
+        --input: 0.20 0.018 280;
         --ring: 0.52 0.22 290;
 
         /* Violet accent */
@@ -35,13 +35,13 @@
         --violet-glow: 0.62 0.24 290;
         --user-bubble: 0.38 0.18 290;
 
-        --sidebar: 0.11 0.01 280;
+        --sidebar: 0.10 0.01 280;
         --sidebar-foreground: 0.9 0.01 280;
         --sidebar-primary: 0.52 0.22 290;
         --sidebar-primary-foreground: 0.98 0.005 280;
-        --sidebar-accent: 0.18 0.018 280;
+        --sidebar-accent: 0.16 0.015 280;
         --sidebar-accent-foreground: 0.85 0.01 280;
-        --sidebar-border: 0.22 0.018 280;
+        --sidebar-border: 0.20 0.015 280;
         --sidebar-ring: 0.52 0.22 290;
 
         --chart-1: 0.52 0.22 290;
@@ -61,11 +61,13 @@
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        background: #0D0D0D;
     }
 
     html, body, #root {
         height: 100%;
         overflow: hidden;
+        background: #0D0D0D;
     }
 }
 
@@ -94,15 +96,25 @@
     }
 
     .card-gradient {
-        background: linear-gradient(135deg, oklch(var(--card)) 0%, oklch(0.15 0.018 285) 100%);
+        background: linear-gradient(135deg, oklch(var(--card)) 0%, oklch(0.13 0.014 285) 100%);
     }
 
+    /* Legacy blob float (used in OnboardingScreen) */
     .blob-float {
         animation: blobFloat 4s ease-in-out infinite;
     }
 
     .blob-glow {
         filter: drop-shadow(0 0 20px oklch(var(--violet) / 0.5)) drop-shadow(0 0 40px oklch(var(--violet) / 0.25));
+    }
+
+    /* Mascot float for WelcomeScreen */
+    .mascot-float {
+        animation: mascotFloat 3s ease-in-out infinite;
+    }
+
+    .mascot-glow {
+        filter: drop-shadow(0 0 24px oklch(var(--violet) / 0.55)) drop-shadow(0 0 48px oklch(var(--violet) / 0.25));
     }
 
     .fade-in {
@@ -129,6 +141,11 @@
         border: 1px solid oklch(var(--violet) / 0.25);
         box-shadow: 0 0 15px oklch(var(--violet) / 0.08), inset 0 1px 0 oklch(var(--violet) / 0.1);
     }
+}
+
+@keyframes mascotFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
 }
 
 @keyframes blobFloat {
@@ -195,7 +212,7 @@
 }
 
 .markdown-content code {
-    background: oklch(0.1 0.01 280);
+    background: oklch(0.10 0.01 280);
     border: 1px solid oklch(var(--border));
     border-radius: 4px;
     padding: 0.15em 0.4em;

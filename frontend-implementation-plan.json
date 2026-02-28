@@ -1,241 +1,203 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Blobby AI — Multi-Agent AI Assistant Interface (Frontend)",
+  "title": "Redesign to ChatGPT Mobile-Style Single-Screen Layout",
   "requirements": [
     {
-      "id": "REQ-2",
-      "summary": "Create onboarding/welcome screen with animated Blobby mascot, tagline, and 'Start Chatting' button",
+      "id": "REQ-12",
+      "summary": "Replace three-panel Layout with single full-screen dark layout",
       "acceptanceCriteria": [
-        "Welcome screen is shown only on first visit",
-        "Animated blob mascot is visible with a subtle floating animation",
-        "Tagline text is displayed below the mascot",
-        "'Start Chatting' button transitions user to the main chat view",
-        "Subsequent visits skip the onboarding screen"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/OnboardingScreen.tsx",
-          "operation": "create",
-          "description": "Create the onboarding/welcome screen component. Display the animated Blobby blob mascot from frontend/public/assets/generated/blobby-mascot.dim_400x400.png with a subtle floating CSS animation. Show the tagline 'Your next-generation AI creative powerhouse' below the mascot. Include a prominent 'Start Chatting' button that sets a localStorage flag 'onboarding_seen' and transitions to the main chat interface. Check localStorage on mount to conditionally render this screen only on first visit."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire the OnboardingScreen component into the app routing. Check localStorage for 'onboarding_seen' flag. If not set, render OnboardingScreen. Once the user clicks 'Start Chatting', set the flag and show the main chat layout. Ensure the onboarding screen is skipped on subsequent visits."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Implement main three-panel layout with sidebar, chat window, and collapsible preview panel, plus top bar and footer",
-      "acceptanceCriteria": [
-        "Left sidebar lists all chat sessions from the backend with timestamps",
-        "Clicking a session loads its messages in the main chat window",
-        "Right preview panel is collapsible and hidden by default",
-        "Top bar logo and name are always visible",
-        "Footer credit text is visible on all screens"
+        "No three-column panel structure exists in the rendered DOM",
+        "The app fills the full viewport without any side-by-side panel splits",
+        "Background color is #0D0D0D"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Remove the three-panel (sidebar, chat, preview) layout structure. Replace with a single full-screen container that uses flex column direction, fills the viewport (min-h-screen), and applies #0D0D0D background. The new structure should render: top navigation bar, main content area (welcome or messages), and bottom input bar."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update the root background color to #0D0D0D. Ensure the body and #root elements inherit full viewport height and the dark background."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Implement top navigation bar with hamburger, title, and settings icon",
+      "acceptanceCriteria": [
+        "Top bar renders with three zones: left hamburger, center title, right settings icon",
+        "Title reads 'Blobby AI' centered",
+        "Hamburger icon is tappable and triggers the sidebar drawer",
+        "Settings icon is present on the right"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TopBar.tsx",
           "operation": "create",
-          "description": "Create the main layout component with three panels: left sidebar for chat session history, central main chat window, and collapsible right panel for live previews. Include a top bar showing the Blobby AI logo from frontend/public/assets/generated/blobby-logo.dim_320x80.png and name on the left, with a settings/profile icon on the right. Add a footer displaying 'Built by Talha bin Saif' in small, subtle text. The right preview panel must be collapsible and hidden by default. Use the authorization component's login button in the top bar."
+          "description": "Create a new TopBar component that renders a full-width horizontal bar with three sections using flex justify-between. Left section: hamburger menu icon button (≡) that calls onMenuToggle prop. Center section: bold white 'Blobby AI' title text. Right section: settings icon button (placeholder for future functionality). Use background #111111 or similar elevated dark surface, with optional subtle violet accent underline."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Import and render the new TopBar component at the top of the Layout. Add state to manage drawer open/closed status (e.g., isDrawerOpen). Pass a toggle handler to TopBar's onMenuToggle prop that flips the drawer state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Implement slide-in sidebar drawer for chat history",
+      "acceptanceCriteria": [
+        "Sidebar drawer is not visible on initial render",
+        "Tapping hamburger icon causes drawer to slide in from the left with smooth CSS transition",
+        "Drawer lists all existing chat sessions",
+        "Tapping a session closes the drawer and loads that session",
+        "A semi-transparent backdrop covers the main content while the drawer is open",
+        "Tapping the backdrop or a close button dismisses the drawer"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SidebarDrawer.tsx",
+          "operation": "create",
+          "description": "Create a SidebarDrawer component that wraps the existing Sidebar component logic (session list, new chat button). The drawer should be positioned fixed, off-screen left by default (transform: translateX(-100%)), and slide in smoothly (transition: transform 300ms ease) when isOpen prop is true. Include a semi-transparent dark backdrop overlay that covers the screen when open and calls onClose when clicked. Add a close button (X icon) in the drawer header."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Replace the inline Sidebar rendering with the new SidebarDrawer component. Pass isOpen state, onClose handler, and all existing sidebar props (sessions, selectedSessionId, onSessionSelect, onNewChat, onDeleteSession). Ensure that selecting a session also closes the drawer by calling the close handler."
         },
         {
           "path": "frontend/src/components/Sidebar.tsx",
-          "operation": "create",
-          "description": "Create the left sidebar component that lists all chat sessions fetched from the backend using listSessions(). Display each session with its first message preview or title and timestamp. Clicking a session should update the current session context and load its messages in the main chat window. Include a 'New Chat' button at the top."
-        },
-        {
-          "path": "frontend/src/components/PreviewPanel.tsx",
-          "operation": "create",
-          "description": "Create the collapsible right preview panel component. It must be hidden by default and can be toggled open/closed. This panel will render live app/game previews in a sandboxed iframe or display generated images. Include a close button and a download button for generated content."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the Layout component into the main app structure. After the onboarding screen (if shown), render the Layout component containing Sidebar, main chat area, and PreviewPanel. Ensure the layout is the primary view for authenticated users."
+          "description": "Remove any width constraints or fixed positioning from Sidebar so it can be contained within the SidebarDrawer. Keep all session listing, new chat, and delete functionality unchanged."
         }
       ]
     },
     {
-      "id": "REQ-4",
-      "summary": "Implement chat message UI with styled user and assistant bubbles, task-type badges, and markdown rendering",
+      "id": "REQ-15",
+      "summary": "Redesign welcome screen with floating mascot, heading, and 2×2 prompt grid",
       "acceptanceCriteria": [
-        "User messages appear right-aligned with indigo background",
-        "Assistant messages appear left-aligned with dark card and glow border",
-        "Task-type pill badge is shown on every assistant message",
-        "Markdown headings, lists, tables, and code blocks render correctly",
-        "Code blocks have syntax highlighting and a copy button"
+        "Welcome content is vertically and horizontally centered in the main area",
+        "Blobby mascot image renders at 100×100px",
+        "Mascot has a slow, smooth looping float animation (no abrupt jumps)",
+        "Heading text reads 'What can I help with?' in bold white",
+        "Four suggestion cards are displayed in a 2-column, 2-row grid",
+        "Clicking a suggestion card populates and submits the message as before"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ChatMessage.tsx",
+          "path": "frontend/src/components/WelcomeScreen.tsx",
           "operation": "create",
-          "description": "Create the ChatMessage component that renders individual messages. User messages must be right-aligned in a soft indigo bubble (#6D28D9 background). Assistant (Blobby) responses must be left-aligned in a dark card with a subtle violet border glow. Each assistant message must display a small task-type pill badge (e.g. 'Chat', 'Code', 'Vision', 'Creative', 'Reasoning', 'Image') but never the underlying model name. Support markdown rendering (headings, bullet points, numbered lists, tables, code blocks with syntax highlighting) in assistant messages using a markdown library like react-markdown with remark-gfm and rehype-highlight. Add a copy button to code blocks."
+          "description": "Create a WelcomeScreen component that renders vertically and horizontally centered content. Display the Blobby mascot image (frontend/public/assets/generated/blobby-mascot.dim_400x400.png) at 100×100px with a continuous floating animation (translateY oscillation, ~3s cycle, ease-in-out infinite). Below the mascot, show the heading 'What can I help with?' in bold white text. Below the heading, render the four suggestion prompt cards in a 2×2 grid (grid-cols-2) centered on screen. Reuse the existing PromptCards component or inline the four cards with the same click behavior (populate and submit)."
         },
         {
           "path": "frontend/src/components/ChatWindow.tsx",
-          "operation": "create",
-          "description": "Create the main chat window component that displays the list of messages for the current session. Fetch messages using getSession(sessionId) from the backend. Render each message using the ChatMessage component. Auto-scroll to the bottom when new messages arrive. Show the loading animation (3-dot pulse) when awaiting a response."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Build message input bar with file/image attach icons, send button, and loading animation",
-      "acceptanceCriteria": [
-        "Input box is visible at the bottom of the chat panel",
-        "Attach file and upload image icons are present and functional (open file picker)",
-        "Send button submits the message",
-        "Enter sends the message; Shift+Enter inserts a newline",
-        "3-dot pulse animation is shown while awaiting a response",
-        "Send button is disabled during generation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/MessageInput.tsx",
-          "operation": "create",
-          "description": "Create the message input component at the bottom of the chat. It must be a large, rounded text area with action icons: attach file, upload image, and send. Support pressing Enter to send (Shift+Enter for newline). While a response is being generated, show a smooth 3-dot pulse loading animation and disable the send button. The attach file and upload image icons should open a file picker. Store the attached image temporarily for inclusion in the next message."
-        },
-        {
-          "path": "frontend/src/components/LoadingIndicator.tsx",
-          "operation": "create",
-          "description": "Create a reusable 3-dot pulse loading animation component. Use smooth CSS animations with a violet color to match the design system. This will be shown in the chat window while awaiting an AI response."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Implement frontend task-type detection logic to classify user messages and select appropriate AI models",
-      "acceptanceCriteria": [
-        "Messages containing 'code', 'debug', 'script', 'function' are classified as Code",
-        "Messages containing 'build', 'create an app', 'make a website' are classified as AppBuild",
-        "Messages containing 'game', '3D', 'three.js' are classified as GameBuild",
-        "Messages containing 'generate image', 'draw', 'picture of' are classified as ImageGen",
-        "Messages with an uploaded image are classified as Vision",
-        "All other conversational messages default to Chat",
-        "Task type is shown as the pill badge on the response card"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/utils/taskClassifier.ts",
-          "operation": "create",
-          "description": "Create a utility function that analyzes the user's message text and uploaded file context to classify it into one of: Chat, Reasoning, Code, AppBuild, GameBuild, ImageGen, Vision, Creative, or Research. Use keyword matching: 'code', 'debug', 'script', 'function' → Code; 'build', 'create an app', 'make a website' → AppBuild; 'game', '3D', 'three.js' → GameBuild; 'generate image', 'draw', 'picture of' → ImageGen; presence of uploaded image → Vision; default to Chat. Return the task type string and the corresponding Puter.js model string for use in AI calls. This classification drives the model selection and the task-type badge display."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Integrate Puter.js for all AI calls with multi-turn context support",
-      "acceptanceCriteria": [
-        "Puter.js loads via CDN without requiring any API key configuration",
-        "Chat messages include the full prior conversation history for context",
-        "Image generation uses puter.ai.txt2img and displays the result inline",
-        "No API keys or secrets are hardcoded anywhere in the frontend"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Add the Puter.js CDN script tag in the <head> section: <script src='https://js.puter.com/v2/'></script>. This loads Puter.js globally without requiring any API key configuration."
+          "description": "When no messages exist (messages.length === 0), render the new WelcomeScreen component instead of the existing PromptCards. Pass the onPromptSelect callback to WelcomeScreen so clicking a suggestion card still populates and submits the message."
         },
         {
-          "path": "frontend/src/services/aiService.ts",
-          "operation": "create",
-          "description": "Create the AI service module that interfaces with Puter.js. Provide functions: sendChatMessage(messages, model) that calls puter.ai.chat(messages, { model }) for text/chat/code/reasoning/creative tasks, and generateImage(prompt) that calls puter.ai.txt2img(prompt) for image generation. Always pass the full conversation history array (all messages in the current session) to puter.ai.chat to maintain multi-turn context. Handle responses and errors gracefully. Do not hardcode any API keys."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Implement App/Game Build feature with live iframe preview and download button",
-      "acceptanceCriteria": [
-        "Right preview panel opens automatically for AppBuild and GameBuild responses",
-        "Generated HTML/JS/CSS code is rendered live inside a sandboxed iframe",
-        "'Download HTML' button saves the full file to the user's machine",
-        "Preview panel can be manually closed and re-opened"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/PreviewPanel.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Extend the PreviewPanel component to support rendering generated HTML/JS/CSS code. When the task type is AppBuild or GameBuild, automatically open the panel and render the generated code inside a sandboxed <iframe> using a blob URL (URL.createObjectURL). Include a 'Download HTML' button that triggers a download of the generated code as a single .html file. The panel can be manually closed and re-opened by the user."
-        },
-        {
-          "path": "frontend/src/utils/codeRenderer.ts",
-          "operation": "create",
-          "description": "Create a utility function that takes generated HTML/JS/CSS code as a string and converts it into a blob URL suitable for iframe rendering. Handle sandboxing attributes (sandbox='allow-scripts allow-same-origin') for security. Provide a function to trigger file download of the code as a single .html file."
+          "description": "Add a new @keyframes float animation that smoothly oscillates translateY (e.g., from 0 to -10px and back) over ~3 seconds with ease-in-out timing. Reference this animation in the WelcomeScreen mascot image styling."
         }
       ]
     },
     {
-      "id": "REQ-9",
-      "summary": "Implement image upload panel with drag-and-drop, thumbnail preview, and vision model integration",
+      "id": "REQ-16",
+      "summary": "Redesign bottom input bar to span full width with updated placeholder",
       "acceptanceCriteria": [
-        "Clicking the image icon opens a file picker for images",
-        "Dragging and dropping an image onto the chat area attaches it",
-        "A thumbnail preview of the attached image is shown before sending",
-        "The image is included in the AI call as base64 for vision analysis",
-        "The thumbnail is cleared after the message is sent"
+        "Input bar stretches the full width of the screen",
+        "Placeholder text is 'Message Blobby AI...'",
+        "Bar is pinned/fixed to the bottom of the viewport",
+        "All existing input actions (file attach, image upload, send, Enter key) continue to work",
+        "Loading animation displays correctly while AI is responding"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/MessageInput.tsx",
           "operation": "modify",
-          "description": "Extend the MessageInput component to support clicking the image icon or dragging and dropping an image file to attach it. Show a thumbnail preview of the uploaded image above the input bar before sending. Convert the image to base64 for inclusion in the Puter.js vision model call alongside the user's text prompt. Clear the thumbnail after the message is sent. Use the file picker for image selection when the icon is clicked."
-        },
-        {
-          "path": "frontend/src/utils/imageHandler.ts",
-          "operation": "create",
-          "description": "Create utility functions for handling image uploads: convert an image file to base64 string, generate a thumbnail preview URL, and handle drag-and-drop events. Validate that the uploaded file is an image type. These utilities will be used by MessageInput to process and preview uploaded images before sending."
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Display four suggested prompt cards on the home/empty-chat screen",
-      "acceptanceCriteria": [
-        "Four prompt cards are visible when no messages exist in the current session",
-        "Each card shows an icon and the prompt text",
-        "Clicking a card fills the input and submits the message",
-        "Cards are hidden once the first message is sent"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/PromptCards.tsx",
-          "operation": "create",
-          "description": "Create the PromptCards component that displays four suggested prompt cards on the home/empty-chat screen. The cards must be: 'Build me a 3D game', 'Generate an image of a futuristic city', 'Write me a Python script to scrape data', and 'Explain quantum computing simply'. Each card should show an icon and the prompt text. Clicking any card must populate it as the user's message in the input bar and immediately submit it. Hide the cards once the first message is sent in the current session."
+          "description": "Update the MessageInput component to span the full viewport width. Change the placeholder text to 'Message Blobby AI...'. Ensure the component is positioned fixed or sticky at the bottom of the viewport. Retain all existing functionality: attach file icon, upload image icon, send button, Enter-to-send, Shift+Enter for newline, loading state with 3-dot animation (LoadingIndicator), and image thumbnail preview above the bar. Verify that the input bar does not overlap the last message by applying appropriate padding to the message list container."
         },
         {
           "path": "frontend/src/components/ChatWindow.tsx",
           "operation": "modify",
-          "description": "Wire the PromptCards component into the ChatWindow. Display the cards when no messages exist in the current session. Hide them once the first message is sent. Pass a callback to the cards that fills the input and triggers message submission."
+          "description": "Ensure the message list container accounts for the fixed bottom input bar by adding bottom padding equal to the input bar height. This prevents the last message from being hidden behind the input."
         }
       ]
     },
     {
-      "id": "REQ-11",
-      "summary": "Apply full visual design system with deep dark background, violet accent, Inter font, and smooth animations",
+      "id": "REQ-17",
+      "summary": "Render full-height scrollable chat messages when session is active",
       "acceptanceCriteria": [
-        "Background color is #111118 or darker across all screens",
-        "Primary interactive elements and accents use #7C3AED",
-        "Inter font is loaded and applied globally",
-        "No neon green or glitch-style animations are present anywhere",
-        "Blob mascot has a continuous subtle float animation",
-        "Cards have dark gradient backgrounds with subtle violet border glow"
+        "When messages exist, the welcome screen is hidden and the message list is shown",
+        "Message list scrolls vertically within the space between top bar and input bar",
+        "User messages appear right-aligned with indigo bubble",
+        "Assistant messages appear left-aligned with violet glow card",
+        "Task-type pill badges remain visible on assistant messages",
+        "Markdown content renders correctly"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "modify",
+          "description": "When messages.length > 0, render the message list in a scrollable container that fills the space between the top bar and bottom input bar (use flex-1 and overflow-y-auto). Map over messages and render each with the existing ChatMessage component. Ensure the ChatMessage component styling (right-aligned user bubbles, left-aligned assistant cards with violet glow, task-type badges, markdown rendering) is preserved unchanged. The container should scroll to the bottom when new messages arrive."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Display App/Game Build previews in full-screen modal overlay",
+      "acceptanceCriteria": [
+        "No right-side preview panel exists in the new layout",
+        "AppBuild/GameBuild iframe previews open in a full-screen overlay or modal",
+        "'Download HTML' button is accessible within the overlay",
+        "A close button dismisses the overlay and returns to the chat"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/PreviewModal.tsx",
+          "operation": "create",
+          "description": "Create a PreviewModal component that renders a full-screen overlay (fixed position, z-index above chat, dark backdrop) when isOpen prop is true. Inside the modal, render the existing PreviewPanel component (or inline its iframe logic) to display the HTML content. Include the 'Download HTML' button and a close button (X icon) at the top. Clicking the close button or backdrop calls the onClose prop."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Remove the inline PreviewPanel rendering from the three-panel layout. Instead, render the new PreviewModal component conditionally based on preview state (when preview content exists). Pass the preview content, onClose handler, and download handler to PreviewModal. Ensure the modal overlays the chat and can be dismissed."
+        },
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "modify",
+          "description": "When an App/Game Build task completes, call the onPreview callback with the generated HTML content (as before), which will trigger the PreviewModal to open in the parent Layout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Apply updated color scheme and smooth animations throughout",
+      "acceptanceCriteria": [
+        "Page background is #0D0D0D",
+        "Violet accent #7C3AED is used for interactive elements, borders, and glows",
+        "Text is legible white/light on the dark background",
+        "Inter font is used throughout",
+        "All transitions and animations are smooth with no jarring jumps"
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Apply the full visual design system globally. Set the deep dark background (#111118) for the body. Define the primary accent electric violet (#7C3AED) as a CSS variable. Import and apply the Inter font from Google Fonts. Define smooth, subtle animations: floating blob keyframes for the mascot, fade-ins for components, gentle glows for cards. Ensure no neon green or glitch effects are present. All animations must be smooth and professional. Set text colors to soft white for body text. Define dark purple/navy gradient styles for cards with subtle violet border glow."
+          "description": "Update the global stylesheet to enforce #0D0D0D as the root background color. Ensure the violet accent #7C3AED is used for interactive elements, borders, and glows (update CSS custom properties if needed). Verify that all text is legible white or light gray on the dark background. Confirm that the Inter font is imported and applied to the body. Add or update CSS transitions for drawer slide, modal fade-in, and floating animation to ensure all are smooth (e.g., transition: transform 300ms ease, opacity 200ms ease)."
+        },
+        {
+          "path": "frontend/src/components/PromptCards.tsx",
+          "operation": "modify",
+          "description": "Update the suggestion card styling to use dark surface cards with a subtle violet border or glow (#7C3AED). Ensure hover and active states have smooth transitions. Verify the cards fit well in the 2×2 grid layout of the WelcomeScreen."
         },
         {
           "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Extend the Tailwind configuration to include the custom color palette: deep dark background (#111118 as 'dark'), electric violet (#7C3AED as 'primary' or 'violet'), and soft white for text. Add the Inter font family to the theme. Define custom animations for floating, fade-ins, and glows. Ensure the configuration supports the premium, calm aesthetic without cyberpunk elements."
+          "description": "Review and update the Tailwind config to ensure the violet accent (#7C3AED) is available as a custom color utility (e.g., bg-violet-600, border-violet-600). Add any missing transition or animation utilities needed for smooth drawer and modal animations."
         }
       ]
     }
